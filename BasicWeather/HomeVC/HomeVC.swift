@@ -8,7 +8,6 @@
 import UIKit
 
 class HomeVC: UIViewController {
-    
     @IBOutlet private weak var tableView: UITableView!
     
 
@@ -51,11 +50,11 @@ extension HomeVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return switch indexPath.row {
         case 0:
-            175
-        case 1:
-            125
-        case 2:
             250
+        case 1:
+            160
+        case 2:
+            330
         default:
             0
         }
