@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 24.1016,
+        "lat": 43.8063
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01d"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 32,
+        "feels_like": 31.62,
+        "temp_min": 32,
+        "temp_max": 32,
+        "pressure": 1013,
+        "humidity": 36,
+        "sea_level": 1013,
+        "grnd_level": 1004
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 4.16,
+        "deg": 301,
+        "gust": 6.98
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1750348478,
+    "sys": {
+        "country": "RO",
+        "sunrise": 1750300870,
+        "sunset": 1750356523
+    },
+    "timezone": 10800,
+    "id": 679841,
+    "name": "Dăbuleni",
+    "cod": 200
+}
