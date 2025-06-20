@@ -29,4 +29,27 @@ class Api {
             completion(nil)
         }
     }
+    
+    func fetchCurrentWeatherLive(completion: @escaping (CurrentWeather?) -> Void) {
+        let urlString = "https://api.openweathermap.org/data/2.5/weather?lat=43.806&lon=24.101&appid=6e4a0c1183758f9ceeef911bcdc88d31&units=metric"
+        guard let url = URL(string: urlString) else { return }
+        let urlRequest = URLRequest(url: url)
+        let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            guard error == nil, let data
+            else {
+                completion(nil)
+                return
+            }
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            do {
+                let decodedData = try decoder.decode(CurrentWeather.self, from: data)
+                completion(decodedData)
+            } catch {
+                print(error)
+                completion(nil)
+            }
+        }
+        task.resume()
+    }
 }

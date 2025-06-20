@@ -15,10 +15,12 @@ class HomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        Api.shared.fetchCurrentWeather { weather in
+        Api.shared.fetchCurrentWeatherLive { weather in
             guard let weather else { return }
-            self.currentWeather = weather
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.currentWeather = weather
+                self.tableView.reloadData()
+            }
         }
     }
 
