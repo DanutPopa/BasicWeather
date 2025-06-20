@@ -24,8 +24,14 @@ class HomeTopRow: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func configure() {
-        
+    func configure(_ weather: CurrentWeather?) {
+        guard let weather else { return }
+        temperatureLabel.text = "\(weather.main.temp)"
+        locationLabel.text = weather.name
+        descriptionLabel.text = weather.weather.first?.description
+        let low = weather.main.tempMin
+        let high = weather.main.tempMax
+        highLowLabel.text = "L:\(low)° | H:\(high)°"
     }
 
 }

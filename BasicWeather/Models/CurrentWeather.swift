@@ -37,11 +37,13 @@ struct CurrentWeatherWeather: Decodable {
 
 struct CurrentWeatherMain: Decodable {
     let temp: Double
-    let feels_like: Double
-    let temp_min: Double
-    let temp_max: Double
+    let feelsLike: Double
+    let tempMin: Double
+    let tempMax: Double
     let pressure: Int
     let humidity: Int
+    let seaLevel: Int
+    let grndLevel: Int
 }
 
 struct CurrentWeatherWind: Decodable {
