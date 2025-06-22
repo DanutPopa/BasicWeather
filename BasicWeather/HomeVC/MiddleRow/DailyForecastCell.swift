@@ -8,14 +8,16 @@
 import UIKit
 
 class DailyForecastCell: UICollectionViewCell {
-    @IBOutlet private weak var img: UIImageView!
-    @IBOutlet private weak var timeLabel: UILabel!
-    @IBOutlet private weak var temperatureLabel: UILabel!
-    
     
     static let id = "DailyForecastCell"
     
-    func configure() {
+    @IBOutlet private weak var img: UIImageView!
+    @IBOutlet private weak var timeLabel: UILabel!
+    @IBOutlet private weak var temperatureLabel: UILabel!
         
+    func configure(_ item: WeeklyForecastList) {
+        // img.image = UIImage()
+        timeLabel.text = item.dtTxt
+        temperatureLabel.text = "\(item.main?.temp ?? 0)°"
     }
 }

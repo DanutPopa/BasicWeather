@@ -9,16 +9,17 @@ import UIKit
 
 class HomeVC: UIViewController {
     private var currentWeather: CurrentWeather?
-    private var weeklyWeather: WeeklyForecast?
+    private var weeklyForecast: WeeklyForecast?
     
     @IBOutlet private weak var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-//        Api.shared.fetchCurrentWeatherLive { weather in
+//        Api.shared.fetchCurrentWeatherLive { [weak self] weather in
 //            guard let weather else { return }
 //            DispatchQueue.main.async {
+//                guard let self else { return }
 //                self.currentWeather = weather
 //                self.tableView.reloadData()
 //            }
@@ -26,20 +27,21 @@ class HomeVC: UIViewController {
         
         Api.shared.fetchSample(CurrentWeather.self) { weather in
             guard let weather else { return }
-            print("weather: \(weather)")
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                currentWeather = weather
+                tableView.reloadData()
+            }
         }
         
         Api.shared.fetchSample(WeeklyForecast.self) { forecast in
             guard let forecast else { return }
-            print("forecast: \(forecast)")
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                weeklyForecast = forecast
+                tableView.reloadData()
+            }
         }
-        
-//        Api.shared.fetchWeeklyForecast { forecast in
-//            DispatchQueue.main.async {
-//                guard let forecast else { return }
-//                print("forecast: \(forecast)")
-//            }
-//        }
     }
 
     private func setupTableView() {
@@ -63,6 +65,7 @@ extension HomeVC: UITableViewDataSource {
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: HomeCarouselRow.id, for: indexPath) as! HomeCarouselRow
+            cell.configure(weeklyForecast)
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: HomeWeeklyForecastRow.id, for: indexPath) as! HomeWeeklyForecastRow
