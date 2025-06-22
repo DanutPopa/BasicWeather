@@ -11,8 +11,10 @@ class Api {
     static let shared = Api()
     private init() { }
     
-    func fetchCurrentWeather(completion: @escaping (CurrentWeather?) -> Void) {
-        guard let path = Bundle.main.path(forResource: "CurrentWeather", ofType: "json")
+    // MARK: - Sample data
+    func fetchSample<T: Decodable>(_ type: T.Type, completion: @escaping (T?) -> Void) {
+        let resource = getResourceName(type)
+        guard let path = Bundle.main.path(forResource: resource, ofType: "json")
         else {
             completion(nil)
             return
@@ -22,11 +24,22 @@ class Api {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         do {
             let data = try Data(contentsOf: url)
-            let decodedData = try decoder.decode(CurrentWeather.self, from: data)
+            let decodedData = try decoder.decode(type, from: data)
             completion(decodedData)
         } catch {
             print(error)
             completion(nil)
+        }
+    }
+    
+    private func getResourceName<T>(_ type: T) -> String {
+        switch type {
+        case is CurrentWeather.Type:
+            "CurrentWeather"
+        case is WeeklyForecast.Type:
+            "WeeklyForecast"
+        default:
+            ""
         }
     }
     

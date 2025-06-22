@@ -9,19 +9,37 @@ import UIKit
 
 class HomeVC: UIViewController {
     private var currentWeather: CurrentWeather?
+    private var weeklyWeather: WeeklyForecast?
     
     @IBOutlet private weak var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        Api.shared.fetchCurrentWeatherLive { weather in
+//        Api.shared.fetchCurrentWeatherLive { weather in
+//            guard let weather else { return }
+//            DispatchQueue.main.async {
+//                self.currentWeather = weather
+//                self.tableView.reloadData()
+//            }
+//        }
+        
+        Api.shared.fetchSample(CurrentWeather.self) { weather in
             guard let weather else { return }
-            DispatchQueue.main.async {
-                self.currentWeather = weather
-                self.tableView.reloadData()
-            }
+            print("weather: \(weather)")
         }
+        
+        Api.shared.fetchSample(WeeklyForecast.self) { forecast in
+            guard let forecast else { return }
+            print("forecast: \(forecast)")
+        }
+        
+//        Api.shared.fetchWeeklyForecast { forecast in
+//            DispatchQueue.main.async {
+//                guard let forecast else { return }
+//                print("forecast: \(forecast)")
+//            }
+//        }
     }
 
     private func setupTableView() {
