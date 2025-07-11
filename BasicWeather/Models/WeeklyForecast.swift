@@ -18,7 +18,7 @@ struct WeeklyForecast: Decodable {
 struct WeeklyForecastList: Decodable {
     let dt: Int?
     let main: WeeklyForecastListMain?
-    let weather: [WeeklyForecastWeather]?
+    let weather: [WeeklyForecastListWeather]?
     let clouds: WeeklyForecastClouds?
     let wind: WeeklyForecastWind?
     let visibility: Int?
@@ -39,7 +39,7 @@ struct WeeklyForecastListMain: Decodable {
     let tempKf: Double?
 }
 
-struct WeeklyForecastWeather: Decodable {
+struct WeeklyForecastListWeather: Decodable {
     let id: Int?
     let main: String?
     let description: String?

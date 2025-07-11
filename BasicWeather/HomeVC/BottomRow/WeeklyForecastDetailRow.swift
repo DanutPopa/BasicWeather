@@ -15,7 +15,6 @@ class WeeklyForecastDetailRow: UITableViewCell {
     @IBOutlet private weak var lowLabel: UILabel!
     @IBOutlet private weak var highLabel: UILabel!
     @IBOutlet private weak var slider: UISlider!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -24,7 +23,16 @@ class WeeklyForecastDetailRow: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func configure() {
+    func configure(_ forecast: DailyForecast) {
+        dayLabel.text = forecast.day
+        let low = forecast.lows.average()
+        let high = forecast.highs.average()
+        lowLabel.text = "\(low)"
+        highLabel.text = "\(high)"
         
+        slider.minimumValue = Float(low)
+        slider.maximumValue = Float(high)
+        let average = forecast.average
+        slider.value = Float(average)
     }
 }
