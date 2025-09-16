@@ -39,5 +39,12 @@ class WeeklyForecastDetailRow: UITableViewCell {
         slider.maximumValue = Float(high)
         let average = forecast.average
         slider.value = Float(average)
+        
+        if let description = forecast.description {
+            let weather = WeatherType(description)
+            img.image = weather.icon
+        } else {
+            img.image = nil
+        }
     }
 }

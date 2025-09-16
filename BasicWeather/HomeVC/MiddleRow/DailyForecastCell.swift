@@ -19,5 +19,12 @@ class DailyForecastCell: UICollectionViewCell {
         // img.image = UIImage()
         timeLabel.text = item.dtTxt
         temperatureLabel.text = "\(item.main?.temp ?? 0)°"
+        
+        if let description = item.weather?.first?.main {
+            let weather = WeatherType(description)
+            img.image = weather.icon
+        } else {
+            img.image = nil
+        }
     }
 }
