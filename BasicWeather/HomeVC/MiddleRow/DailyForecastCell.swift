@@ -17,7 +17,7 @@ class DailyForecastCell: UICollectionViewCell {
         
     func configure(_ item: WeeklyForecastList) {
         // img.image = UIImage()
-        timeLabel.text = item.dtTxt
+        timeLabel.text = item.dt?.toHour()
         temperatureLabel.text = "\(item.main?.temp ?? 0)°"
         
         if let description = item.weather?.first?.main {

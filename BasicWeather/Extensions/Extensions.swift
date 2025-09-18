@@ -5,7 +5,7 @@
 //  Created by Danut Popa on 23.06.2025.
 //
 
-import Foundation
+import UIKit
 
 extension [Double] {
     func average() -> Double {
@@ -23,6 +23,17 @@ extension Int {
     func toDay() -> String {
         let date = Date(timeIntervalSince1970: Double(self))
         return date.formatted(Date.FormatStyle().weekday(.abbreviated))
+    }
+    
+    func toHour() -> String {
+        let formatter = DateFormatter()
+        formatter.setLocalizedDateFormatFromTemplate("h:mm")
+        formatter.amSymbol = "am"
+        formatter.pmSymbol = "pm"
+        
+        let date = Date(timeIntervalSince1970: Double(self))
+        
+        return formatter.string(from: date)
     }
 }
 
