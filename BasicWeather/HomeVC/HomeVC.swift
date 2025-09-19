@@ -49,7 +49,8 @@ class HomeVC: UIViewController {
         tableView.delegate = self
     }
     @IBAction func didTapListButton(_ sender: UIBarButtonItem) {
-        
+        let searchVC = SearchVC()
+        navigationController?.pushViewController(searchVC, animated: true)
     }
 }
 
