@@ -9,7 +9,7 @@ import UIKit
 
 class SearchVC: UIViewController {
     
-    private lazy var search: UISearchController = {
+    private lazy var searchController = {
         let search = UISearchController(searchResultsController: SearchResultsVC())
         search.searchBar.placeholder = "Search for a city"
         search.obscuresBackgroundDuringPresentation = true
@@ -18,7 +18,7 @@ class SearchVC: UIViewController {
         return search
     }()
     
-    private lazy var tableView: UITableView = {
+    private lazy var tableView = {
        let table = UITableView()
         table.backgroundColor = .systemBackground
         table.showsHorizontalScrollIndicator = false
@@ -31,7 +31,7 @@ class SearchVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        navigationItem.searchController = search
+        navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         setupUI()
         setupTableView()
@@ -39,7 +39,6 @@ class SearchVC: UIViewController {
     
     private func setupUI() {
         view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
