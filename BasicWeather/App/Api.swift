@@ -32,12 +32,14 @@ class Api {
         }
     }
     
-    private func getResourceName<T>(_ type: T) -> String {
+    private func getResourceName<T>(_ type: T.Type) -> String {
         switch type {
         case is CurrentWeather.Type:
             "CurrentWeather"
         case is WeeklyForecast.Type:
             "WeeklyForecast"
+            case is [SearchLocation].Type:
+            "SearchLocation"
         default:
             ""
         }

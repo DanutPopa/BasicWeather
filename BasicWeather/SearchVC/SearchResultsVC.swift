@@ -9,6 +9,8 @@ import UIKit
 
 class SearchResultsVC: UIViewController {
     
+    private var locations: [SearchLocation] = []
+    
     private lazy var tableView = {
        let table = UITableView()
         table.backgroundColor = .systemBackground
@@ -38,7 +40,16 @@ class SearchResultsVC: UIViewController {
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(LocationRow.self, forCellReuseIdentifier: LocationRow.id)
+        tableView.register(LocationRow.self, forCellReuseIdentifier: LocationRow.resultsId)
+    }
+    
+    func update(text: String) {
+        // Make API request to fetch city data
+        Api.shared.fetchSample([SearchLocation].self) { [weak self] locations in
+            guard let locations, let self else { return }
+            self.locations = locations
+            self.tableView.reloadData()
+        }
     }
 
 }
@@ -46,11 +57,13 @@ class SearchResultsVC: UIViewController {
 extension SearchResultsVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        0
+        locations.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: LocationRow.id, for: indexPath) as! LocationRow
+        let cell = tableView.dequeueReusableCell(withIdentifier: LocationRow.resultsId, for: indexPath) as! LocationRow
+        let location = locations[indexPath.row]
+        cell.configure(location)
         return cell
     }
 }
