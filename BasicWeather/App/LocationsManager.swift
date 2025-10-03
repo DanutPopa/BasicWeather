@@ -17,7 +17,24 @@ class LocationsManager {
     private var locations: [SearchLocation] = []
     
     func getLocations() -> [SearchLocation] {
-        locations
+        if locations.isEmpty == false {
+            return locations
+        } else {
+            guard let data = defaults.object(forKey: "Locations") as? [Data] else {
+                return []
+            }
+            do {
+                let decoder = JSONDecoder()
+                for item in data {
+                    let decodedData = try decoder.decode(SearchLocation.self, from: item)
+                    locations.append(decodedData)
+                }
+                return locations
+            } catch {
+                print(error)
+                return []
+            }
+        }
     }
     
     func appendAndSave(_ location: SearchLocation) {
@@ -28,7 +45,7 @@ class LocationsManager {
     private func saveLocation() {
         do {
             var encoded: [Data] = []
-            var encoder = JSONEncoder()
+            let encoder = JSONEncoder()
             for location in locations {
                 let data = try encoder.encode(location)
                 encoded.append(data)

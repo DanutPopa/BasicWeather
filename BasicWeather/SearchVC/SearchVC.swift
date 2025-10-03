@@ -90,8 +90,8 @@ extension SearchVC: UITableViewDelegate {
 
 extension SearchVC: SearchResultsVCDelegate {
     func didSelect(_ location: SearchLocation) {
-        let locations = locationsManager.getLocations()
         locationsManager.appendAndSave(location)
+        let locations = locationsManager.getLocations()
         tableView.beginUpdates()
         let index = IndexPath(row: locations.count - 1, section: 0)
         tableView.insertRows(at: [index], with: .automatic)
