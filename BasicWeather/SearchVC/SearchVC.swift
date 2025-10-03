@@ -8,6 +8,7 @@
 import UIKit
 
 class SearchVC: UIViewController {
+    private let locationsManager = LocationsManager.shared
     
     private lazy var searchController = {
         let search = UISearchController(searchResultsController: SearchResultsVC())
@@ -60,7 +61,7 @@ extension SearchVC: UISearchResultsUpdating {
         guard let text = searchController.searchBar.text else { return }
         
          let searchResults = searchController.searchResultsController as! SearchResultsVC
-        
+        searchResults.delegate = self
         searchResults.update(text: text)
     }
 }
@@ -68,12 +69,15 @@ extension SearchVC: UISearchResultsUpdating {
 extension SearchVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        0
+        let locations = locationsManager.getLocations()
+        return locations.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: LocationRow.searchId, for: indexPath) as! LocationRow
-//        cell.configure(<#T##location: SearchLocation##SearchLocation#>)
+        let locations = locationsManager.getLocations()
+        let location = locations[indexPath.row]
+        cell.configure(location)
         return cell
     }
 }
@@ -81,5 +85,17 @@ extension SearchVC: UITableViewDataSource {
 extension SearchVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         50
+    }
+}
+
+extension SearchVC: SearchResultsVCDelegate {
+    func didSelect(_ location: SearchLocation) {
+        let locations = locationsManager.getLocations()
+        locationsManager.appendAndSave(location)
+        tableView.beginUpdates()
+        let index = IndexPath(row: locations.count - 1, section: 0)
+        tableView.insertRows(at: [index], with: .automatic)
+        tableView.endUpdates()
+        searchController.isActive = false
     }
 }
