@@ -86,6 +86,17 @@ extension SearchVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         50
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let locations = locationsManager.getLocations()
+            let location = locations[indexPath.row]
+            locationsManager.delete(location)
+            tableView.beginUpdates()
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
+        }
+    }
 }
 
 extension SearchVC: SearchResultsVCDelegate {

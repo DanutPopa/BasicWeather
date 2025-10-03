@@ -42,6 +42,17 @@ class LocationsManager {
         saveLocation()
     }
     
+    func delete(_ location: SearchLocation) {
+        for i in 0..<locations.count {
+            guard location == locations[i] else {
+                continue
+            }
+            locations.remove(at: i)
+            saveLocation()
+            return
+        }
+    }
+    
     private func saveLocation() {
         do {
             var encoded: [Data] = []
