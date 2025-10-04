@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol SearchVCDelegate where Self: HomeVC {
+    func didSelect(_ location: SearchLocation)
+}
+
 class SearchVC: UIViewController {
+    weak var delegate: SearchVCDelegate?
+    
     private let locationsManager = LocationsManager.shared
     
     private lazy var searchController = {
@@ -96,6 +102,14 @@ extension SearchVC: UITableViewDelegate {
             tableView.deleteRows(at: [indexPath], with: .automatic)
             tableView.endUpdates()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let locations = locationsManager.getLocations()
+        let location = locations[indexPath.row]
+        delegate?.didSelect(location)
+        navigationController?.popViewController(animated: true)
     }
 }
 

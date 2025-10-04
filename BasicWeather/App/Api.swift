@@ -11,6 +11,8 @@ class Api {
     static let shared = Api()
     private init() { }
     
+    private let appId = "6e4a0c1183758f9ceeef911bcdc88d31"
+    
     // MARK: - Sample data
     func fetchSample<T: Decodable>(_ type: T.Type, completion: @escaping (T?) -> Void) {
         let resource = getResourceName(type)
@@ -45,8 +47,32 @@ class Api {
         }
     }
     
+    // MARK: Live data
+    
+    func fetchWeather(lat: Double, lon: Double, completion: @escaping (CurrentWeather?) -> Void) {
+        let urlStr = "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=\(appId)&units=metric"
+        guard let url = URL(string: urlStr) else { return }
+        let urlRequest = URLRequest(url: url)
+        let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            guard error == nil, let data else {
+                completion(nil)
+                return
+            }
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            do {
+                let decodedData = try decoder.decode(CurrentWeather.self, from: data)
+                completion(decodedData)
+            } catch {
+                print(error)
+                completion(nil)
+            }
+        }
+        task.resume()
+    }
+    
     func fetchCurrentWeatherLive(completion: @escaping (CurrentWeather?) -> Void) {
-        let urlString = "https://api.openweathermap.org/data/2.5/weather?lat=43.806&lon=24.101&appid=6e4a0c1183758f9ceeef911bcdc88d31&units=metric"
+        let urlString = "https://api.openweathermap.org/data/2.5/weather?lat=43 .806&lon=24.101&appid=\(appId)&units=metric"
         guard let url = URL(string: urlString) else { return }
         let urlRequest = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
