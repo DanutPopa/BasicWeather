@@ -65,8 +65,7 @@ class SearchVC: UIViewController {
 extension SearchVC: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text else { return }
-        
-         let searchResults = searchController.searchResultsController as! SearchResultsVC
+        let searchResults = searchController.searchResultsController as! SearchResultsVC
         searchResults.delegate = self
         searchResults.update(text: text)
     }
@@ -109,6 +108,7 @@ extension SearchVC: UITableViewDelegate {
         let locations = locationsManager.getLocations()
         let location = locations[indexPath.row]
         delegate?.didSelect(location)
+        locationsManager.saveSelected(location)
         navigationController?.popViewController(animated: true)
     }
 }

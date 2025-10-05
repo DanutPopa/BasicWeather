@@ -10,22 +10,49 @@ import UIKit
 class HomeVC: UIViewController {
     private var currentWeather: CurrentWeather?
     private var weeklyForecast: WeeklyForecast?
+    let locationsManager = LocationsManager.shared
     
     @IBOutlet private weak var tableView: UITableView!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-//        Api.shared.fetchCurrentWeatherLive { [weak self] weather in
+        
+        if let location = locationsManager.getSelectedLocation() {
+            fetchWeather(for: location)
+        } else {
+            let searchVC = SearchVC()
+            searchVC.delegate = self
+            navigationController?.pushViewController(searchVC, animated: true)
+        }
+        
+//        Api.shared.fetchSample(CurrentWeather.self) { weather in
 //            guard let weather else { return }
-//            DispatchQueue.main.async {
+//            DispatchQueue.main.async { [weak self] in
 //                guard let self else { return }
-//                self.currentWeather = weather
-//                self.tableView.reloadData()
+//                currentWeather = weather
+//                tableView.reloadData()
 //            }
 //        }
         
-        Api.shared.fetchSample(CurrentWeather.self) { weather in
+//        Api.shared.fetchSample(WeeklyForecast.self) { forecast in
+//            guard let forecast else { return }
+//            DispatchQueue.main.async { [weak self] in
+//                guard let self else { return }
+//                weeklyForecast = forecast
+//                tableView.reloadData()
+//            }
+//        }
+    }
+
+    private func setupTableView() {
+        tableView.dataSource = self
+        tableView.delegate = self
+    }
+    
+    private func fetchWeather(for location: SearchLocation) {
+        Api.shared.fetchWeather(lat: location.lat, lon: location.lon) { weather in
             guard let weather else { return }
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
@@ -33,21 +60,8 @@ class HomeVC: UIViewController {
                 tableView.reloadData()
             }
         }
-        
-        Api.shared.fetchSample(WeeklyForecast.self) { forecast in
-            guard let forecast else { return }
-            DispatchQueue.main.async { [weak self] in
-                guard let self else { return }
-                weeklyForecast = forecast
-                tableView.reloadData()
-            }
-        }
     }
-
-    private func setupTableView() {
-        tableView.dataSource = self
-        tableView.delegate = self
-    }
+    
     @IBAction func didTapListButton(_ sender: UIBarButtonItem) {
         let searchVC = SearchVC()
         searchVC.delegate = self
@@ -100,13 +114,6 @@ extension HomeVC: UITableViewDelegate {
 extension HomeVC: SearchVCDelegate {
     func didSelect(_ location: SearchLocation) {
         // Fetch data
-        Api.shared.fetchWeather(lat: location.lat, lon: location.lon) { weather in
-            guard let weather else { return }
-            DispatchQueue.main.async { [weak self] in
-                guard let self else { return }
-                currentWeather = weather
-                tableView.reloadData()
-            }
-        }
+        fetchWeather(for: location)
     }
 }
