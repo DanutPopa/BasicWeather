@@ -56,7 +56,7 @@ class Api {
     // MARK: Live data
     
     private func fetch<T: Decodable & Sendable>(_ type: T.Type, request: URLRequest, completion: @escaping (T?) -> Void) {
-        let taks = URLSession.shared.dataTask(with: request) { data, response, error in
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard error == nil, let data else {
                 completion(nil)
                 return
@@ -71,6 +71,7 @@ class Api {
                 completion(nil)
             }
         }
+        task.resume()
     }
     
     private func constructURL(for endpoint: Endpoint, _ lat: Double?, _ lon: Double?, _ city: String?) -> URLRequest? {
@@ -105,91 +106,43 @@ class Api {
         return request
     }
     
-    func fetchWeatherData(lat: Double, lon: Double, completion: @escaping ((CurrentWeather?, WeeklyForecast?)) -> Void) {
-        // Call fetch x2 for CurrentWeather and WeeklyForecast objects
-        // Construct URLRequest object x2 for the fetch function
+    func fetchWeather(lat: Double, lon: Double, completion: @escaping ((CurrentWeather?, WeeklyForecast?)) -> Void) {
         guard let currentWeather = constructURL(for: .currentWeather, lat, lon, nil),
               let weeklyForecast = constructURL(for: .weeklyForecast, lat, lon, nil)
         else {
             completion((nil, nil))
             return
         }
+        
+        var weather: CurrentWeather?
+        var forecast: WeeklyForecast?
+        
+        let group = DispatchGroup()
+        group.enter()
+        fetch(CurrentWeather.self, request: currentWeather) { result in
+            weather = result
+            group.leave()
+        }
+        
+        group.enter()
+        fetch(WeeklyForecast.self, request: weeklyForecast) { result in
+            forecast = result
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            completion((weather, forecast))
+        }
     }
     
-    func fetchSearchData(city: String, completion: @escaping ([SearchLocation]?) -> Void) {
-        // Construct URLRequest object x1 for the fetch function for fetching a location
+    func fetchLocation(city: String, completion: @escaping ([SearchLocation]?) -> Void) {
         guard let search = constructURL(for: .citySearch, nil, nil, city) else {
             completion(nil)
             return
         }
-    }
-    
-    func fetchWeather(lat: Double, lon: Double, completion: @escaping (CurrentWeather?) -> Void) {
-        let urlStr = "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=\(appId)&units=metric"
-        guard let url = URL(string: urlStr) else { return }
-        let urlRequest = URLRequest(url: url)
-        let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-            guard error == nil, let data else {
-                completion(nil)
-                return
-            }
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            do {
-                let decodedData = try decoder.decode(CurrentWeather.self, from: data)
-                completion(decodedData)
-            } catch {
-                print(error)
-                completion(nil)
-            }
+        
+        fetch([SearchLocation].self, request: search) { result in
+            completion(result)
         }
-        task.resume()
-    }
-    
-    func fetchForecast(lat: Double, lon: Double, completion: @escaping (WeeklyForecast?) -> Void) {
-        let urlStr = "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(lon)&appid=\(appId)&units=metric"
-        guard let url = URL(string: urlStr) else { return }
-        let urlRequest = URLRequest(url: url)
-        let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-            guard error == nil, let data else {
-                completion(nil)
-                return
-            }
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            do {
-                let decodedData = try decoder.decode(WeeklyForecast.self, from: data)
-                completion(decodedData)
-            } catch {
-                print(error)
-                completion(nil)
-            }
-        }
-        task.resume()
-    }
-    
-    
-    
-    func fetchLocation(for city: String, completion: @escaping ([SearchLocation]?) -> Void) {
-        let urlString = "https://api.openweathermap.org/geo/1.0/direct?q=\(city)&limit=5&appid=\(appId)"
-        guard let url = URL(string: urlString) else { return }
-        let urlRequest = URLRequest(url: url)
-        let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-            guard error == nil, let data
-            else {
-                completion(nil)
-                return
-            }
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            do {
-                let decodedData = try decoder.decode([SearchLocation].self, from: data)
-                completion(decodedData)
-            } catch {
-                print(error.localizedDescription)
-                completion(nil)
-            }
-        }
-        task.resume()
     }
 }

@@ -49,7 +49,7 @@ class SearchResultsVC: UIViewController {
     
     func update(text: String) {
         print(text)
-        Api.shared.fetchLocation(for: text) { locations in
+        Api.shared.fetchLocation(city: text) { locations in
             guard let locations else { return }
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
