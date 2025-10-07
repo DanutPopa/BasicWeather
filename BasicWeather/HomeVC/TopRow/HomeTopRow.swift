@@ -36,6 +36,7 @@ class HomeTopRow: UITableViewCell {
         if let description = weather.weather.first?.main {
             let weather = WeatherType(description)
             img.image = weather.icon
+            img.tintColor = weather.tint
         } else {
             img.image = nil
         }

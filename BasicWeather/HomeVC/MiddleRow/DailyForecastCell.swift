@@ -23,6 +23,7 @@ class DailyForecastCell: UICollectionViewCell {
         if let description = item.weather?.first?.main {
             let weather = WeatherType(description)
             img.image = weather.icon
+            img.tintColor = weather.tint
         } else {
             img.image = nil
         }

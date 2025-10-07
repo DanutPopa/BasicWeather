@@ -1,14 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4FZ-Cy-pQ9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xw3-Eq-Sed">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <capability name="Map view configurations" minToolsVersion="14.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--View Controller-->
+        <scene sceneID="lS1-Zt-hyO">
+            <objects>
+                <viewController id="nZG-A3-kmA" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5th-Jb-mjC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kei-Jh-A7O">
+                                <rect key="frame" x="0.0" y="118" width="393" height="617"/>
+                                <standardMapConfiguration key="preferredConfiguration"/>
+                            </mapView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ueA-18-SF1"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="ueA-18-SF1" firstAttribute="bottom" secondItem="Kei-Jh-A7O" secondAttribute="bottom" id="FmF-4k-mfd"/>
+                            <constraint firstItem="ueA-18-SF1" firstAttribute="trailing" secondItem="Kei-Jh-A7O" secondAttribute="trailing" id="H0h-nq-QJ6"/>
+                            <constraint firstItem="Kei-Jh-A7O" firstAttribute="top" secondItem="ueA-18-SF1" secondAttribute="top" id="j4G-sA-8aE"/>
+                            <constraint firstItem="Kei-Jh-A7O" firstAttribute="leading" secondItem="ueA-18-SF1" secondAttribute="leading" id="qbE-Za-pqm"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="" image="map.fill" catalog="system" id="Fkq-ox-aez"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lPR-rP-BnU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1086" y="760"/>
+        </scene>
         <!--HomeVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -18,8 +47,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="yQ1-fL-T0b">
-                                <rect key="frame" x="0.0" y="172" width="393" height="612"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <rect key="frame" x="0.0" y="172" width="393" height="563"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HomeTopRow" rowHeight="250" id="lqZ-Zm-6Lq" customClass="HomeTopRow" customModule="BasicWeather" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="393" height="250"/>
@@ -59,6 +88,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="t4O-7p-3cc" firstAttribute="height" secondItem="vw5-Ws-fcG" secondAttribute="height" multiplier="0.6" id="73E-Bo-qcn"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="t4O-7p-3cc" secondAttribute="trailing" constant="5" id="GWE-m2-iga"/>
@@ -73,6 +103,7 @@
                                                 <constraint firstItem="M0U-aB-zXK" firstAttribute="top" secondItem="YnX-px-vip" secondAttribute="bottom" id="x3W-Ue-K9s"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="descriptionLabel" destination="wqZ-S1-gs8" id="FxY-Bn-6Te"/>
                                             <outlet property="highLowLabel" destination="LNx-7B-wXn" id="aPl-K0-HjC"/>
@@ -90,7 +121,7 @@
                                             <subviews>
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="n4j-Fi-ZRJ">
                                                     <rect key="frame" x="0.0" y="0.0" width="393" height="160"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="MO8-sT-dBX">
                                                         <size key="itemSize" width="128" height="128"/>
                                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -134,6 +165,7 @@
                                                                     <constraint firstItem="RZV-IX-d5J" firstAttribute="centerX" secondItem="K04-KS-mGN" secondAttribute="centerX" id="ybL-Lt-YP5"/>
                                                                 </constraints>
                                                             </collectionViewCellContentView>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <size key="customSize" width="75" height="140"/>
                                                             <connections>
                                                                 <outlet property="img" destination="RZV-IX-d5J" id="4JL-IF-CxS"/>
@@ -144,6 +176,7 @@
                                                     </cells>
                                                 </collectionView>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="n4j-Fi-ZRJ" firstAttribute="top" secondItem="DMG-Qs-7DJ" secondAttribute="top" id="0Nk-rd-5vC"/>
                                                 <constraint firstItem="n4j-Fi-ZRJ" firstAttribute="leading" secondItem="DMG-Qs-7DJ" secondAttribute="leading" id="Gag-Yf-Zd7"/>
@@ -151,6 +184,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="n4j-Fi-ZRJ" secondAttribute="bottom" id="wsD-P0-Evz"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="collectionView" destination="n4j-Fi-ZRJ" id="CDz-5a-A3z"/>
                                         </connections>
@@ -170,7 +204,7 @@
                                                 </label>
                                                 <tableView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PJ2-Yx-qSw">
                                                     <rect key="frame" x="20" y="40" width="353" height="275"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <prototypes>
                                                         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WeeklyForecastDetailRow" rowHeight="92" id="oMa-ZR-9yq" customClass="WeeklyForecastDetailRow" customModule="BasicWeather" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="50" width="353" height="92"/>
@@ -207,6 +241,7 @@
                                                                         <rect key="frame" x="145.33333333333337" y="29" width="155.66666666666663" height="34"/>
                                                                     </slider>
                                                                 </subviews>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstItem="MHR-kX-kIV" firstAttribute="centerY" secondItem="lxX-cE-GkT" secondAttribute="centerY" id="GgI-VF-jKi"/>
                                                                     <constraint firstItem="CCa-u3-p0p" firstAttribute="leading" secondItem="1XS-WK-I4c" secondAttribute="trailing" constant="2" id="Gnv-M2-fGP"/>
@@ -222,6 +257,7 @@
                                                                     <constraint firstItem="AKT-tP-qs0" firstAttribute="centerY" secondItem="lxX-cE-GkT" secondAttribute="centerY" id="xPq-Lu-14d"/>
                                                                 </constraints>
                                                             </tableViewCellContentView>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <connections>
                                                                 <outlet property="dayLabel" destination="MHR-kX-kIV" id="sck-b8-tZw"/>
                                                                 <outlet property="highLabel" destination="CCa-u3-p0p" id="trW-hm-I87"/>
@@ -233,6 +269,7 @@
                                                     </prototypes>
                                                 </tableView>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="PJ2-Yx-qSw" secondAttribute="trailing" id="20S-fo-sr0"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="6N0-F0-Vc9" secondAttribute="trailing" constant="2" id="Iry-sF-asg"/>
@@ -243,6 +280,7 @@
                                                 <constraint firstItem="PJ2-Yx-qSw" firstAttribute="leading" secondItem="5o7-bV-c9d" secondAttribute="leadingMargin" id="sFK-XS-5S8"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="tableView" destination="PJ2-Yx-qSw" id="bac-6t-1AL"/>
                                         </connections>
@@ -274,12 +312,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1415" y="25"/>
+            <point key="canvasLocation" x="2135" y="25"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="IXy-N0-t2x">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4FZ-Cy-pQ9" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="sun.max.fill" catalog="system" id="K1F-Ir-k6Z"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="I6P-fd-oi7">
                         <rect key="frame" x="0.0" y="118" width="393" height="54"/>
@@ -292,14 +331,33 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="neu-eu-R1m" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="161" y="25"/>
+            <point key="canvasLocation" x="1127" y="25"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="69C-8l-rfH">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="xw3-Eq-Sed" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ez5-OT-jYm">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="4FZ-Cy-pQ9" kind="relationship" relationship="viewControllers" id="k4U-EV-QvJ"/>
+                        <segue destination="nZG-A3-kmA" kind="relationship" relationship="viewControllers" id="FFp-rv-nwh"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FXD-1m-mqx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="159.54198473282443" y="24.647887323943664"/>
         </scene>
     </scenes>
     <resources>
         <image name="line.3.horizontal" catalog="system" width="128" height="65"/>
+        <image name="map.fill" catalog="system" width="128" height="110"/>
         <image name="sun.max.fill" catalog="system" width="128" height="125"/>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

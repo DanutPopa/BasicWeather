@@ -45,4 +45,38 @@ enum WeatherType {
             nil
         }
     }
+    
+    var background: UIColor {
+        switch self {
+        case .sunny, .clear:
+            return .sunnyBackground
+        case .cloudy, .foggy, .misty:
+            return .cloudyBackground
+        case .snowy:
+            return .snowyBackground
+        case .rainy:
+            return .rainyBackground
+        case .windy:
+            return .windyBackground
+        case .none:
+            return .white
+        }
+    }
+    
+    var tint: UIColor {
+        switch self {
+        case .sunny, .clear:
+            return .systemYellow
+        case .cloudy, .foggy, .misty:
+            return .systemGray2
+        case .snowy:
+            return .white
+        case .rainy:
+            return .systemCyan
+        case .windy:
+            return .systemTeal
+        case .none:
+            return .white
+        }
+    }
 }

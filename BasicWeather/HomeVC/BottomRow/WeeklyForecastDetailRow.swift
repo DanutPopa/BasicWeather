@@ -43,6 +43,7 @@ class WeeklyForecastDetailRow: UITableViewCell {
         if let description = forecast.description {
             let weather = WeatherType(description)
             img.image = weather.icon
+            img.tintColor = weather.tint
         } else {
             img.image = nil
         }
